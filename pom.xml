@@ -86,6 +86,13 @@
                 <skipTests>false</skipTests>
             </properties>
         </profile>
+        <profile>
+            <id>local</id>
+            <properties>
+                <envName>local</envName>
+                <skipTests>false</skipTests>
+            </properties>
+        </profile>
 
         <!-- Dimension 2: Database profiles -->
         <profile>
