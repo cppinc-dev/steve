@@ -227,6 +227,16 @@ local,mariadb
 
 - Click the "Run" button
 
+## Setup project in Eclipse IDE
+
+- Click menu "Project -> Properties".
+- At left, click "Java Build Path".
+- Click tab "Source".
+- Click "Add Folder".
+- Activate the checkbox at left of /steve/target/generated-sources
+- Click "OK".
+- Click "Appy and Close".
+
 Screenshots
 -----
 1. [Home](website/screenshots/home.png)
