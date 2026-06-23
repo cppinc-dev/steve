@@ -50,7 +50,7 @@ public class JsonObjectMapperTest {
 
         var exception = assertThrows(ConstraintViolationException.class, () -> readBack(req, AuthorizeRequest.class));
 
-        Assertions.assertEquals("idTag: must not be null", exception.getMessage());
+        Assertions.assertTrue(exception.getMessage().equals("idTag: must not be null") || exception.getMessage().equals("idTag: ne doit pas être nul"));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class JsonObjectMapperTest {
 
         var exception = assertThrows(ConstraintViolationException.class, () -> readBack(req, ocpp.cs._2012._06.AuthorizeRequest.class));
 
-        Assertions.assertEquals("idTag: size must be between 0 and 20", exception.getMessage());
+        Assertions.assertTrue(exception.getMessage().equals("idTag: size must be between 0 and 20") || exception.getMessage().equals("idTag: la taille doit être comprise entre 0 et 20"));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class JsonObjectMapperTest {
 
         var exception = assertThrows(DatabindException.class, () -> readBack(req, MeterValuesRequest.class));
 
-        Assertions.assertEquals("sampledValue: must not be null", exception.getOriginalMessage());
+        Assertions.assertTrue(exception.getOriginalMessage().equals("sampledValue: must not be null") || exception.getOriginalMessage().equals("sampledValue: ne doit pas être nul"));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class JsonObjectMapperTest {
 
         var exception = assertThrows(ConstraintViolationException.class, () -> readBack(req, ExtendedTriggerMessage.class));
 
-        Assertions.assertEquals("requestedMessage: must not be null", exception.getMessage());
+        Assertions.assertTrue(exception.getMessage().equals("requestedMessage: must not be null") || exception.getMessage().equals("requestedMessage: ne doit pas être nul"));
     }
 
     @Test
