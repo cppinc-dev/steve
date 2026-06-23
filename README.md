@@ -151,7 +151,6 @@ After SteVe has successfully started, you can access the web interface using the
 
     http://<your-server-ip>:<port>/steve/manager
     
-
 ### Add a charge point
 
 1. In order for SteVe to accept messages from a charge point, the charge point must first be registered. To add a charge point to SteVe select *Data Management* >> *Charge Points* >> *Add*. Enter the ChargeBox ID configured in the charge point and confirm.
@@ -163,6 +162,70 @@ After SteVe has successfully started, you can access the web interface using the
 As soon as a heartbeat is received, you should see the status of the charge point in the SteVe Dashboard.
 
 *Have fun!*
+
+# Development
+
+## System Requirements
+
+SteVe requires 
+* JDK 21 or newer
+* Eclipse IDE 4.39.0 + 
+* MySQL or MariaDB. You should use [one of these](.github/workflows/main.yml#L11-L35) supported versions.
+
+## Create local properties file
+
+- Copy file /src/main/resources/application-test.properties to /src/main/resources/application-local.properties
+- Open file /src/main/resources/application-local.properties
+- Set "db.user" and "db.password" properties.
+- Save file
+
+## Create Java application in Eclipse IDE
+
+- Right-click file /src/main/java/de/nwth/idsg/steve/SteveApplication.java
+- Click "Run As -> Java Application"
+- Let it Fail
+- Open Eclipse IDE menu "Run -> Run Configurations..."
+- At left, select "Java Application -> SteveApplication"
+- Click tab "Arguments"
+- In the "VM Arguments" field, type the following:
+
+```
+-Dspring.profiles.active=local"
+```
+
+- Click the "Apply" button
+- Click the "Run" button
+- Let it fail
+
+## Create database
+
+```
+CREATE DATABASE stevedb CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+```
+
+## Create database tables and generate Jooq source files
+
+- Right-click the project in the Project Explorer window
+- Click "Run As -> Maven build..."
+- In the "Goals" field, type the following :
+
+```
+clean process-resources
+```
+
+- In the "Profiles" field, type the following :
+
+```
+local,mysql
+```
+
+or
+
+```
+local,mariadb
+```
+
+- Click the "Run" button
 
 Screenshots
 -----
