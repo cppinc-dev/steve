@@ -13,21 +13,21 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <name>SteVe</name>
-    <description>SteckdosenVerwaltung</description>
+    <name>SteVe CPPI</name>
+    <description>Gestion des bornes VE</description>
 
     <organization>
-        <name>SteVe Community Team</name>
-        <url>https://github.com/steve-community/steve</url>
+        <name>Construction &amp; Pavage Portneuf inc.</name>
+        <url>https://cppinc.ca/</url>
     </organization>
 
     <inceptionYear>2013</inceptionYear>
 
     <developers>
         <developer>
-            <name>Sevket Goekay</name>
-            <email>sevketgokay@gmail.com</email>
-            <url>https://github.com/goekay</url>
+            <name>Claude Petit</name>
+            <email>c.petit@cppinc.ca</email>
+            <url>https://github.com/cppinc-dev</url>
         </developer>
     </developers>
 
