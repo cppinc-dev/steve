@@ -79,7 +79,7 @@ import static de.rwth.idsg.steve.utils.Helpers.getRandomString;
  * @since 22.03.18
  */
 @Slf4j
-@ActiveProfiles(profiles = "test")
+//@ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment =  WebEnvironment.DEFINED_PORT)
 public class OperationalSoapOCPP16Test {
 

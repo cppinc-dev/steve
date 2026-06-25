@@ -51,7 +51,7 @@ import static de.rwth.idsg.steve.utils.Helpers.getRandomString;
  * @since 10.03.2018
  */
 @Slf4j
-@ActiveProfiles(profiles = "test")
+//@ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment =  WebEnvironment.DEFINED_PORT)
 public class ApplicationTest {
 

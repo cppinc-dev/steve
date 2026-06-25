@@ -149,7 +149,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 20.04.2026
  */
 @Slf4j
-@ActiveProfiles(profiles = "test")
+//@ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class Ocpp16JsonCsmsCertificationIT extends AbstractOcpp16JsonCsms {

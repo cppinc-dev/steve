@@ -44,7 +44,7 @@ import static jooq.steve.db.Tables.CHARGE_BOX;
  * @author Sevket Goekay <sevketgokay@gmail.com>
  * @since 21.01.2024
  */
-@ActiveProfiles(profiles = "test")
+//@ActiveProfiles(profiles = "test")
 @SpringJUnitConfig
 @ContextConfiguration(
     classes = JooqOnlyTestConfiguration.class,

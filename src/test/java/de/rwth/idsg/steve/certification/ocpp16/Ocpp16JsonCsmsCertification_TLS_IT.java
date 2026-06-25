@@ -75,7 +75,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * - TC_086_CSMS and TC_087_CSMS (server-side cert and mTLS)
  */
 @Slf4j
-@ActiveProfiles(profiles = {"test", "test-tls"})
+//@ActiveProfiles(profiles = {"test", "test-tls"})
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class Ocpp16JsonCsmsCertification_TLS_IT extends AbstractOcpp16JsonCsms {

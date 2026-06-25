@@ -80,21 +80,23 @@
             </properties>
         </profile>
         <profile>
-            <id>test</id>
-            <properties>
-                <envName>test</envName>
-                <skipTests>false</skipTests>
-            </properties>
-        </profile>
-        <profile>
             <id>local</id>
             <properties>
                 <envName>local</envName>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+
+        <!-- Dimension 2 (optional): Run tests -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <testFile>test</testFile>
                 <skipTests>false</skipTests>
             </properties>
         </profile>
 
-        <!-- Dimension 2: Database profiles -->
+        <!-- Dimension 3: Database profiles -->
         <profile>
             <id>mysql</id>
             <properties>
@@ -241,8 +243,10 @@
                             <goal>read-project-properties</goal>
                         </goals>
                         <configuration>
+                        	<quiet>true</quiet>
                             <files>
                                 <file>src/main/resources/application-${envName}.properties</file>
+                                <file>src/main/resources/application-${testFile}.properties</file>
                             </files>
                         </configuration>
                     </execution>

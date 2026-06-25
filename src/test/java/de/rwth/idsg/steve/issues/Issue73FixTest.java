@@ -54,7 +54,7 @@ import static de.rwth.idsg.steve.utils.Helpers.getRandomString;
  * @author Sevket Goekay <sevketgokay@gmail.com>
  * @since 02.07.2018
  */
-@ActiveProfiles(profiles = "test")
+//@ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment =  WebEnvironment.DEFINED_PORT)
 public class Issue73FixTest {
 

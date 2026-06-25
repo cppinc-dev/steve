@@ -38,7 +38,7 @@ import static jooq.steve.db.tables.OcppTag.OCPP_TAG;
 /**
  * Created with assistance from GPT-5.3-Codex
  */
-@ActiveProfiles(profiles = "test")
+//@ActiveProfiles(profiles = "test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @Transactional
 abstract class AbstractRepositoryITBase {
