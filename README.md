@@ -172,12 +172,10 @@ SteVe requires
 * Eclipse IDE 4.39.0 + 
 * MySQL or MariaDB. You should use [one of these](.github/workflows/main.yml#L11-L35) supported versions.
 
-## Create local properties file
+## Create local environment variables
 
-- Copy file /src/main/resources/application-test.properties to /src/main/resources/application-local.properties
-- Open file /src/main/resources/application-local.properties
-- Set "db.user" and "db.password" properties.
-- Save file
+- Copy file /.env.template to /src/main/resources/.env.local
+- Edit file /.env.local
 
 ## Create Java application in Eclipse IDE
 
@@ -197,16 +195,18 @@ SteVe requires
 - Click the "Run" button
 - Let it fail
 
-## Create database
+## Add Maven Configurations
 
-```
-CREATE DATABASE stevedb CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-```
-
-## Create database tables and generate Jooq source files
+### Generate resources
 
 - Right-click the project in the Project Explorer window
 - Click "Run As -> Maven build..."
+- In the "Name" field, type the following :
+
+```
+SteVe - Generate resources
+```
+
 - In the "Goals" field, type the following :
 
 ```
@@ -225,10 +225,88 @@ or
 local,mariadb
 ```
 
-- Click the "Run" button
+- Open the "JRE" tab.
+- In the "VM Arguments" field, type the following :
+
+```
+--add-opens=java.base/java.lang=ALL-UNNAMED
+```
+
+- Click the "Apply" button
+- Click the "Close" button
+
+### Build
+
+- Right-click the project in the Project Explorer window
+- Click "Run As -> Maven build..."
+- In the "Name" field, type the following :
+
+```
+SteVe - Build
+```
+
+- In the "Goals" field, type the following :
+
+```
+package
+```
+
+- In the "Profiles" field, type the following :
+
+```
+local,mysql
+```
+
+or
+
+```
+local,mariadb
+```
+
+- Click the "Apply" button
+- Click the "Close" button
+
+### Test
+
+- Right-click the project in the Project Explorer window
+- Click "Run As -> Maven build..."
+- In the "Name" field, type the following :
+
+```
+SteVe - Test
+```
+
+- In the "Goals" field, type the following :
+
+```
+test
+```
+
+- In the "Profiles" field, type the following :
+
+```
+local,test,mysql
+```
+
+or
+
+```
+local,test,mariadb
+```
+
+- Click the "Apply" button
+- Click the "Close" button
+
+## Create database
+
+```
+CREATE DATABASE stevedb CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+```
 
 ## Setup project in Eclipse IDE
 
+- Right-click the project in the Project Explorer window
+- Click "Run As -> SteVe - Generate resources"
 - Click menu "Project -> Properties".
 - At left, click "Java Build Path".
 - Click tab "Source".
