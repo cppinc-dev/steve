@@ -55,6 +55,7 @@
             </activation>
             <properties>
                 <envName>prod</envName>
+				<envFileName>.env.prod</envFileName>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
@@ -76,6 +77,7 @@
             <id>dev</id>
             <properties>
                 <envName>dev</envName>
+				<envFileName>.env.dev</envFileName>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
@@ -83,6 +85,7 @@
             <id>local</id>
             <properties>
                 <envName>local</envName>
+				<envFileName>.env.local</envFileName>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
@@ -152,6 +155,20 @@
         </resources>
 
         <plugins>
+			<plugin>
+			    <groupId>io.github.mjourard</groupId>
+			    <artifactId>env-file-maven-plugin</artifactId>
+			    <version>2.1.0</version>
+                <executions>
+                    <execution>
+                    	<phase>initialize</phase>
+                        <goals>
+                            <goal>loadenv</goal>
+                        </goals>
+                    </execution>
+                </executions>
+			</plugin>
+            
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
