@@ -14,4 +14,4 @@ EXPOSE 8180
 EXPOSE 8443
 COPY --from=builder /build/target/steve.war /app/steve.war
 # Start the application instantly using environment variables at runtime
-CMD ["java", "-XX:MaxRAMPercentage=85", "-Dspring.profiles.active=docker", "-jar", "steve.war"]
+CMD ["java", "-XX:MaxRAMPercentage=85", "-Dspring.profiles.active=docker,mysql", "-jar", "steve.war"]
