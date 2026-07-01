@@ -8,13 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
 
-    env:
-      DB_IP: ${{ secrets.DB_IP }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,7 +40,26 @@ jobs:
           # 3. Give DigitalOcean a brief moment to apply the firewall rule
           sleep 10
 
+      - name: Diagnostic - Check Secret Lengths
+        env:
+          DB_IP: ${{ secrets.DB_IP }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          echo "Checking if environment variables are empty or loaded..."
+          echo "DB_IP character count: ${#DB_IP}"
+          echo "DB_USER character count: ${#DB_USER}"
+          echo "DB_SCHEMA character count: ${#DB_SCHEMA}"
+
       - name: Build with Maven
+        env:
+          DB_IP: ${{ secrets.DB_IP }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./mvnw clean package -Pprod,mysql
 
       - name: Remove GitHub Runner IP from DO Database
