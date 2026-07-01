@@ -15,7 +15,11 @@ ingress:
 name: steve-prod
 region: tor
 services:
-- dockerfile_path: /Dockerfile
+- name: steve
+  image:
+    registry_type: docr
+    repository: cppinc/steve-prod
+    tag: latest
   envs:
   - key: DB_IP
     scope: RUN_TIME
@@ -44,13 +48,8 @@ services:
     scope: RUN_TIME
     type: SECRET
     value: EV[1:3/IZYWJszyT2TRFsQqg8OiBkMp2cfqs+:Hgwulr/p33EjWkbEY5Q79hCa2fHrKAU=]
-  github:
-    branch: master
-    repo: cppinc-dev/steve
   http_port: 4443
   instance_count: 1
   instance_size_slug: apps-s-1vcpu-1gb
   internal_ports:
   - 8180
-  name: steve
-  source_dir: /

@@ -68,6 +68,11 @@ jobs:
             echo "Could not find a firewall rule matching IP $RUNNER_IP. It may have already been removed."
           fi
 
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t registry.digitalocean.com/cppinc/steve-prod:latest .
+          docker push registry.digitalocean.com/cppinc/steve-prod:latest
+
       - name: Deploy the app
         uses: digitalocean/app_action/deploy@v2
         with:
