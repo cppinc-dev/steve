@@ -3,25 +3,10 @@ alerts:
 - rule: DOMAIN_FAILED
 features:
 - buildpack-stack=ubuntu-22
-ingress:
-  rules:
-  - component:
-      name: steve
-    match:
-      authority:
-        exact: ""
-      path:
-        prefix: /
 name: steve-prod
 region: tor
 services:
-- name: steve
-  image:
-    registry_type: "DOCR"
-    registry: ""
-    repository: "steve-prod"
-    tag: "latest"
-  envs:
+- envs:
   - key: DB_IP
     scope: RUN_TIME
     value: mysql-do-user-18968842-0.k.db.ondigitalocean.com
@@ -49,8 +34,14 @@ services:
     scope: RUN_TIME
     type: SECRET
     value: EV[1:3/IZYWJszyT2TRFsQqg8OiBkMp2cfqs+:Hgwulr/p33EjWkbEY5Q79hCa2fHrKAU=]
-  http_port: 4443
+  health_check:
+    initial_delay_seconds: 90
+  http_port: 8080
+  image:
+    registry: cppinc
+    registry_type: DOCR
+    repository: steve-prod
+    tag: latest
   instance_count: 1
   instance_size_slug: apps-s-1vcpu-1gb
-  internal_ports:
-  - 8080
+  name: steve
