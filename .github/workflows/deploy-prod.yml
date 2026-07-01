@@ -8,6 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
 
+    env:
+      DB_IP: ${{ secrets.DB_IP }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,12 +48,6 @@ jobs:
           sleep 10
 
       - name: Build with Maven
-        env:
-          DB_IP: ${{ secrets.DB_IP }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./mvnw clean package -Pprod,mysql
 
       - name: Remove GitHub Runner IP from DO Database
