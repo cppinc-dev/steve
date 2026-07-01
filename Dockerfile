@@ -1,6 +1,11 @@
 FROM eclipse-temurin:21-jdk AS builder
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV TZ=UTC
+ARG DB_IP
+ARG DB_PORT
+ARG DB_SCHEMA
+ARG DB_USER
+ARG DB_PASSWORD
 WORKDIR /build
 COPY . /build
 # Run the Maven package ONCE during 'docker build'
