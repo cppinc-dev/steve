@@ -1,7 +1,7 @@
 <%--
 
-    SteVe - SteckdosenVerwaltung - https://github.com/steve-community/steve
-    Copyright (C) 2013-2026 SteVe Community Team
+    SteVe CPPI - Gestion des bornes VE - https://cppinc.ca/
+    Copyright (C) 2013-2026 Construction & Pavage Portneuf inc.
     All Rights Reserved.
 
     This program is free software: you can redistribute it and/or modify
