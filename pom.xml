@@ -398,11 +398,19 @@
                 <!-- http://www.jooq.org/doc/3.5/manual/code-generation/codegen-configuration/
                      http://www.jooq.org/doc/3.5/manual/code-generation/codegen-advanced/ -->
                 <configuration>
+                    <jdbc>
+                        <!-- If not set, generator infers from url.
+                             See org.jooq.codegen.GenerationTool#driverClass(org.jooq.meta.jaxb.Jdbc) at
+                             https://github.com/jOOQ/jOOQ/blob/main/jOOQ-codegen/src/main/java/org/jooq/codegen/GenerationTool.java#L1294 -->
+                        <!-- <driver>...</driver> -->
+                        <url>${jdbcUrl}</url>
+                        <user>${db.user}</user>
+                        <password>${db.password}</password>
+                    </jdbc>
+
                     <generator>
-						<database>
-						    <name>org.jooq.meta.extensions.ddl.DDLDatabase</name>
-						    
-                     		<!-- The default database name, if no name is supplied, will be derived from the JDBC connection.
+                        <database>
+                            <!-- The default database name, if no name is supplied, will be derived from the JDBC connection.
                                  https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-name/ -->
                             <!-- <name>...</name> -->
                             <includes>.*</includes>
@@ -441,33 +449,15 @@
                                     <includeTypes>.*(DATE).*</includeTypes>
                                 </forcedType>
                             </forcedTypes>
-                            
-                            <properties>
-						        <property>
-						            <key>scripts</key>
-						            <value>src/main/resources/db/migration</value>
-						        </property>
-						        
-						        <property>
-						            <key>sort</key>
-						            <value>flyway</value>
-						        </property>
-						        
-						        <property>
-						            <key>defaultNameCase</key>
-						            <value>as_is</value>
-						        </property>
-						    </properties>
-						</database>
-
-						<generate>
+                        </database>
+                        <generate>
                             <fluentSetters>true</fluentSetters>
                             <!-- https://www.jooq.org/doc/3.14/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-generate-java-time-types/
                                  JOOQ switching to java.time data types messes up our converters since we use JodaTime.
                                  Until we as a project completely switch to java.time, I am disabling it. -->
                             <javaTimeTypes>false</javaTimeTypes>
                         </generate>
-            
+
                         <target>
                             <packageName>jooq.steve.db</packageName>
                             <directory>${project.build.directory}/generated-sources</directory>
