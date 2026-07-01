@@ -55,7 +55,7 @@
             </activation>
             <properties>
                 <envName>prod</envName>
-				<envFileName>.env.prod</envFileName>
+				<skipEnvFile>true</skipEnvFile>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
@@ -63,6 +63,7 @@
             <id>docker</id>
             <properties>
                 <envName>docker</envName>
+				<skipEnvFile>true</skipEnvFile>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
@@ -70,6 +71,7 @@
             <id>kubernetes</id>
             <properties>
                 <envName>kubernetes</envName>
+				<skipEnvFile>true</skipEnvFile>
                 <skipTests>true</skipTests>
             </properties>
         </profile>
@@ -88,23 +90,6 @@
 				<envFileName>.env.local</envFileName>
                 <skipTests>true</skipTests>
             </properties>
-            <build>
-		        <plugins>
-					<plugin>
-					    <groupId>io.github.mjourard</groupId>
-					    <artifactId>env-file-maven-plugin</artifactId>
-					    <version>2.1.0</version>
-		                <executions>
-		                    <execution>
-		                    	<phase>initialize</phase>
-		                        <goals>
-		                            <goal>loadenv</goal>
-		                        </goals>
-		                    </execution>
-		                </executions>
-					</plugin>
-		        </plugins>
-            </build>
         </profile>
 
         <!-- Dimension 2 (optional): Run tests -->
@@ -172,6 +157,23 @@
         </resources>
 
         <plugins>
+			<plugin>
+			    <groupId>io.github.mjourard</groupId>
+			    <artifactId>env-file-maven-plugin</artifactId>
+			    <version>2.1.0</version>
+			    <configuration>
+			        <skip>${skipEnvFile}</skip>
+			    </configuration>
+                <executions>
+                    <execution>
+                    	<phase>initialize</phase>
+                        <goals>
+                            <goal>loadenv</goal>
+                        </goals>
+                    </execution>
+                </executions>
+			</plugin>
+			
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
