@@ -17,9 +17,10 @@ region: tor
 services:
 - name: steve
   image:
-    registry_type: docr
-    repository: cppinc/steve-prod
-    tag: latest
+    registry_type: "DOCR"
+    registry: ""
+    repository: "steve-prod"
+    tag: "latest"
   envs:
   - key: DB_IP
     scope: RUN_TIME
@@ -52,4 +53,4 @@ services:
   instance_count: 1
   instance_size_slug: apps-s-1vcpu-1gb
   internal_ports:
-  - 8180
+  - 8080
