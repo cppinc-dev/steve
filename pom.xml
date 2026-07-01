@@ -316,7 +316,7 @@
 
                 <configuration>
                     <!-- https://github.com/steve-community/steve/issues/157 -->
-                    <initSql>SET default_storage_engine=InnoDB;</initSql>
+                    <initSql>SET default_storage_engine=InnoDB; SET SESSION sql_require_primary_key = 0;</initSql>
                     <!-- we need this because of extensions. they have a higher version number
                          namespace reserved (e.g. 8.x.x). new migrations in core version should
                          be executed in the extended version as well -->
