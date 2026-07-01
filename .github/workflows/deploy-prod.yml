@@ -1,0 +1,76 @@
+name: Build and Deploy to DigitalOcean
+
+on:
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Install and Authenticate DigitalOcean CLI
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_STEVE_ACCESS_TOKEN }}
+
+      - name: Whitelist GitHub Runner IP in DO Database
+        id: firewall_add
+        env:
+          CLUSTER_ID: ${{ secrets.DIGITALOCEAN_STEVE_DATABASE_CLUSTER_ID }}
+        run: |
+          # 1. Fetch the exact public IP of this GitHub runner
+          RUNNER_IP=$(curl -s https://api.ipify.org)
+          echo "runner_ip=$RUNNER_IP" >> $GITHUB_OUTPUT
+          echo "Discovered GitHub Runner Public IP: $RUNNER_IP"
+
+          # 2. Add the IP rule to your DO Database Firewall
+          doctl databases firewalls append "$CLUSTER_ID" --rule "ip_addr:$RUNNER_IP" > /dev/null
+
+          # 3. Give DigitalOcean a brief moment to apply the firewall rule
+          sleep 10
+
+      - name: Build with Maven
+        env:
+          DB_IP: ${{ secrets.DB_IP }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: ./mvnw clean package -Pprod,mysql
+
+      - name: Remove GitHub Runner IP from DO Database
+        if: always()
+        env:
+          CLUSTER_ID: ${{ secrets.DIGITALOCEAN_STEVE_DATABASE_CLUSTER_ID }}
+          RUNNER_IP: ${{ steps.firewall_add.outputs.runner_ip }}
+        run: |
+          echo "Removing IP $RUNNER_IP from DigitalOcean database firewall..."
+
+          # 1. Query doctl for your firewall rules in JSON format, search for your IP, and extract its UUID
+          RULE_UUID=$(doctl databases firewalls list "$CLUSTER_ID" -o json | jq -r ".[] | select(.value == \"$RUNNER_IP\") | .uuid")
+
+          # 2. Remove IP from its UUID
+          if [ -n "$RULE_UUID" ] && [ "$RULE_UUID" != "null" ]; then
+            echo "Found Rule UUID: $RULE_UUID. Deleting..."
+            doctl databases firewalls remove "$CLUSTER_ID" --uuid "$RULE_UUID" > /dev/null
+          else
+            echo "Could not find a firewall rule matching IP $RUNNER_IP. It may have already been removed."
+          fi
+
+      - name: Deploy the app
+        uses: digitalocean/app_action/deploy@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_STEVE_ACCESS_TOKEN }}
+          app_spec_location: .do/app-prod.yaml
+          print_build_logs: true
+          print_deploy_logs: true
